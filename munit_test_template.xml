@@ -1,16 +1,18 @@
-<munit:test name="{{ test_name }}" description="Test for {{ flow_name }}">
-  <munit:behavior>
-    {% for mock in mocks %}
-    <mock:when processor="{{ mock.processor }}" doc:name="Mock {{ mock.processor }}">
-      {% if mock.payload %}
-      <mock:with-attributes>
-        <mock:equal-to name="config-ref" value="{{ mock.config_ref }}" />
-      </mock:with-attributes>
-      <mock:then-return>
-        <mock:payload><![CDATA[{{ mock.payload }}]]></mock:payload>
-      </mock:then-return>
-      {% endif %}
-    </mock:when>
-    {% endfor %}
-  </munit:behavior>
-</munit:test>
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+        http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+
+    <munit:config name="{{ test_name }}" />
+
+    <munit:test name="{{ test_name }}" description="Test">
+        <munit:execution>
+            <flow-ref name="{{ flow_name }}" />
+        </munit:execution>
+    </munit:test>
+</mule>
